@@ -1,0 +1,9 @@
+{
+	"name": "financialdata",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "c0c86632-1199-4d4c-bd76-e341222efd42",
+		"tenantId": "dda92668-6467-4f0d-8d05-555723b473f2"
+	}
+}

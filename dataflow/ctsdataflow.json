@@ -1,0 +1,102 @@
+{
+	"name": "ctsdataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_financial_data_dl",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_sink_file_blob_sa",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "ls_financial_data_blob",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Segment as string,",
+				"          Country as string,",
+				"          Product as string,",
+				"          {Discount Band} as string,",
+				"          {Units Sold} as string,",
+				"          {Manufacturing Price} as string,",
+				"          {Sale Price} as string,",
+				"          {Gross Sales} as string,",
+				"          Discounts as string,",
+				"          { Sales} as string,",
+				"          COGS as string,",
+				"          Profit as string,",
+				"          Date as string,",
+				"          {Month Number} as string,",
+				"          {Month Name} as string,",
+				"          Year as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source",
+				"source select(mapColumn(",
+				"          Segment,",
+				"          Country,",
+				"          Product,",
+				"          {Units Sold},",
+				"          {Manufacturing Price},",
+				"          {Sale Price},",
+				"          {Gross Sales},",
+				"          Discounts,",
+				"          { Sales},",
+				"          COGS,",
+				"          Profit,",
+				"          Date,",
+				"          {Month Number},",
+				"          {Month Name},",
+				"          Year",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(Country = upper(Country),",
+				"          {Month & Year} = concat({Month Name},' ',Year)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          Segment,",
+				"          Country,",
+				"          Product,",
+				"          {Units Sold},",
+				"          {Manufacturing Price},",
+				"          {Sale Price},",
+				"          {Gross Sales},",
+				"          Discounts,",
+				"          { Sales},",
+				"          COGS,",
+				"          Profit,",
+				"          Date,",
+				"          {Month Number},",
+				"          {Month & Year}",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

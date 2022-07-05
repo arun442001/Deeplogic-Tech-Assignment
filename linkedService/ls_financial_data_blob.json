@@ -1,0 +1,12 @@
+{
+	"name": "ls_financial_data_blob",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=financialsa;EndpointSuffix=core.windows.net;",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDdFRDdCQTg1LTREODMtNDU0Qi1BNjVBLTlBNkNDOUYyOEU2Q180ZTRhM2YzNC03MzdlLTQzZTEtYTI0MC1kN2ViYjk4NGQzZGMiDQp9"
+		}
+	}
+}
